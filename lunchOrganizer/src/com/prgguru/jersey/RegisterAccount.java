@@ -8,19 +8,19 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-@Path("/register")
-public class Register {
+@Path("/registerAccount")
+public class RegisterAccount {
   // HTTP Get Method
   @GET
-  // Path: http://localhost/<appln-folder-name>/register/doregister
+  // Path: http://localhost/<appln-folder-name>/registerAccount/doregister
   @Path("/doregister")  
   // Produces JSON as response
   @Produces(MediaType.APPLICATION_JSON) 
-  // Query parameters are parameters: http://localhost/<appln-folder-name>/register/doregister?name=pqrs&username=abc&password=xyz
-  public String doLogin(@QueryParam("name") String name, @QueryParam("username") String uname, @QueryParam("password") String pwd){
+  // Query parameters are parameters: http://localhost/<appln-folder-name>/registerAccount/doregister?name=pqrs&username=abc&password=xyz
+  public String doRegister(@QueryParam("name") String name, @QueryParam("username") String uname, @QueryParam("password") String pwd){
       String response = "";
-      System.out.println("Inside doLogin "+uname+"  "+pwd);
-      int retCode = registerUser(name, uname, pwd);
+      System.out.println("Inside doRegister "+uname+"  "+pwd);
+      int retCode = registerAccount(name, uname, pwd);
       if(retCode == 0){
           response = Utitlity.constructJSON("register",true);
       }else if(retCode == 1){
@@ -34,13 +34,13 @@ public class Register {
 
   }
 
-  private int registerUser(String name, String uname, String pwd){
+  private int registerAccount(String name, String uname, String pwd){
       System.out.println("Inside checkCredentials");
       int result = 3;
       if(Utitlity.isNotNull(uname) && Utitlity.isNotNull(pwd)){
           try {
-              if(DBConnection.insertUser(name, uname, pwd)){
-                  System.out.println("RegisterUSer if");
+              if(DBConnection.insertAccount(name, uname, pwd)){
+                  System.out.println("RegisterUser if");
                   result = 0;
               }
           } catch(SQLException sqle){
